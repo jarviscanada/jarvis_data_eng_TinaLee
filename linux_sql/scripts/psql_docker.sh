@@ -2,13 +2,22 @@
 # script usage
 # ./scripts/psql_docker.sh start|stop|create [db_username][db_password]
 
+# set up arguments
+command=$1
+
+# validate arguments
+if [ "$#" -ge 4 ]; then 
+  echo "Illegal number of parameters"
+  exit 1
+fi
+
 # check if docker is running
 systemctl status docker || systemctl start docker
 
 # get latest postgres image
 docker pull postgres
 
-case $1 in
+case $command in
   create)
     # check if container is created
     if [ $(docker container ls -a -f name=jrvs-psql | wc -l) -eq 2 ]; then
@@ -25,8 +34,8 @@ case $1 in
     # create `pgdata` volume
     docker volume create pgdate
 
-    export PGPASSWORD="$2"
-    export PGUSERNAME="$1"
+    export PGPASSWORD=$3
+    export PGUSERNAME=$2
 
     # create a psql container
     docker run --name jrvs-psql -e POSTGRES_PASSWORD="$PGPASSWORD" -e POSTGRES_USER="$PGUSERNAME" -d -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres
