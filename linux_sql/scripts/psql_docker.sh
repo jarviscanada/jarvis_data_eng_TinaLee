@@ -25,8 +25,11 @@ case $1 in
     # create `pgdata` volume
     docker volume create pgdate
 
+    export PGPASSWORD="$2"
+    export PGUSERNAME="$1"
+
     # create a psql container
-    docker run --name jrvs-psql -e POSTGRES_PASSWORD="$2" -e POSTGRES_USER="$1" -d -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres
+    docker run --name jrvs-psql -e POSTGRES_PASSWORD="$PGPASSWORD" -e POSTGRES_USER="$PGUSERNAME" -d -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres
 
     # check if container is created
     if [ $(docker container ls -a -f name=jrvs-psql | wc -l) -eq 2 ]; then
@@ -49,6 +52,9 @@ case $1 in
     fi
     docker container stop jrvs-psql
     ;;
+  *)
+    echo Please enter a valid command
+    exit 1
 esac
 
 exit 0
