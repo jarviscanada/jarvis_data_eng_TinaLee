@@ -4,9 +4,11 @@
 
 # set up arguments
 command=$1
+username=$2
+password=$3
 
 # validate arguments
-if [ "$#" -ge 4 ]; then 
+if [ $# -ge 4 ] || [ $# -lt 1 ]; then
   echo "Illegal number of parameters"
   exit 1
 fi
@@ -26,19 +28,22 @@ case $command in
     fi
 
     # check if `db_username` or `db_password` is pass through as argument
-    if [ $# -lt 2 ]; then
+    if [ $# -ne 3 ]; then
       echo Incorrect number of arguments. Please provide username and password
       exit 1
     fi
 
+    # check if volume exist
     # create `pgdata` volume
-    docker volume create pgdate
+    if [ $(docker volume ls | awk '{print $2}' | egrep 'pgdata') == '' ]; then
+      docker volume create pgdata
+    fi
 
-    export PGPASSWORD=$3
-    export PGUSERNAME=$2
+    # set password as env variable
+    export PGPASSWORD=$password
 
     # create a psql container
-    docker run --name jrvs-psql -e POSTGRES_PASSWORD="$PGPASSWORD" -e POSTGRES_USER="$PGUSERNAME" -d -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres
+    docker run --name jrvs-psql -e POSTGRES_PASSWORD=$PGPASSWORD -e POSTGRES_USER="$username" -d -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres
 
     # check if container is created
     if [ $(docker container ls -a -f name=jrvs-psql | wc -l) -eq 2 ]; then
