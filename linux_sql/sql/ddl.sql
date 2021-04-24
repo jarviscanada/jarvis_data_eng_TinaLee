@@ -1,12 +1,8 @@
 -- connect to host_agent database
 \c host_agent
 
--- make sure there is no previously created table
-DROP TABLE IF EXISTS PUBLIC.host_usage;
-DROP TABLE IF EXISTS PUBLIC.host_info;
-
 -- create table to store hardware specs
-CREATE TABLE PUBLIC.host_info
+CREATE TABLE PUBLIC.host_info IF NOT EXISTS
   (
      id               SERIAL NOT NULL,
      hostname         VARCHAR NOT NULL,
@@ -22,7 +18,7 @@ CREATE TABLE PUBLIC.host_info
   );
 
 -- create table to store resource usage data
-CREATE TABLE PUBLIC.host_usage
+CREATE TABLE PUBLIC.host_usage IF NOT EXISTS
   (
      "timestamp"    TIMESTAMP NOT NULL,
      host_id        SERIAL NOT NULL,
