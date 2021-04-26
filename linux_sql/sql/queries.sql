@@ -1,22 +1,20 @@
 -- Group hosts by CPU number and sort by their memory size in descending order
 SELECT
-            AVG(cpu_number) OVER (PARTITION BY cpu_number) as cpu_number,
-            id AS host_id,
-            total_mem
+    AVG(cpu_number) OVER (PARTITION BY cpu_number) as cpu_number,
+    id AS host_id,
+    total_mem
 FROM
     host_info AS info
 ORDER BY total_mem DESC;
 
--- Helper function
-CREATE FUNCTION round5(ts timestamp) RETURNS timestamp AS
-$$
-BEGIN
-    RETURN data_trunc('hour', ts) + data_part('minute', ts):: int / 5 * interval '5 min';
-END
-$$
-    LANGUAGE PLPGSQL;
+-- Helper function: round timestamp to 5 min interval
+CREATE FUNCTION round5(ts timestamp) RETURNS timestamp AS $$
+    BEGIN
+        RETURN data_trunc('hour', ts) + data_part('minute', ts):: int / 5 * interval '5 min';
+    END;
+$$ LANGUAGE plpgsql;
 
---
+-- Find average used memory in percentage over 5 min interval for each host
 SELECT
     use.host_id,
     hostname AS host_name,
@@ -34,7 +32,7 @@ ORDER BY
     host_id ASC,
     timestamp ASC;
 
--- Detect Server Failure
+-- Detect Server Failure when there is less than three entries in 5 min interval
 SELECT
     host_id,
     round5(timestamp),
@@ -45,4 +43,4 @@ GROUP BY
     host_id,
     round5(timestamp)
 HAVING
-        count(*) < 3;
+    count(*) < 3;
