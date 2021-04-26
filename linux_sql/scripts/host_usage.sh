@@ -5,6 +5,12 @@ db_name=$3
 psql_user=$4
 psql_password=$5
 
+# validate arguments
+if [ $# -ne 5 ]; then
+  echo "Invalid number of arguments. Please enter host, port number, database name, username and password."
+  exit 1
+fi
+
 # Helper for fetching usage data
 fetch_data() {
   vmstat -t | tail -1 | awk "$1" | xargs
