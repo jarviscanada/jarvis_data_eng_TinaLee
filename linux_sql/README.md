@@ -65,6 +65,8 @@ This diagram shows how clustered servers communicate with each other through a s
 stored into a PostgresSQL database. Each server will have its copy of bash shell scripts that automatically parse 
 resource usage and store data into a database.
 
+![Linux_sql_architecture](./assets/Linux_SQL_Architecture.png)
+
 ## Scripts
 * `psql_docker.sh`
 * `ddl.sql`
