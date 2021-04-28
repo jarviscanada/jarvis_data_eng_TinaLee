@@ -13,22 +13,24 @@ This guide walks you through the cluster monitoring solution. \
 # Start a psql instance using psql_docker.sh
 ./scripts/psql_docker.sh create [db_username] [db_password]
 
-# Check if container is running 
-docker ps -f name=jrvs-psql
-
 # Navigate into psql instance using psql cli
-psql -h psql_host -U psql_user
+psql -h localhost -U postgres
 
 # Now you should be in psql REPL 
 # Create database (type \q to quit psql REPL)
-CREATE DATABASE db_name;
+CREATE DATABASE host_agent;
 
 # You should now be exited from psql REPL
-# Create tables to store hardware specifications and resource usage
-psql -h psql_host -U psql_user -d host_agent -f sql/ddl.sql
+# Create tables to store hardware specification data and resource usage data
+psql -h localhost -U postgres -d host_agent -f sql/ddl.sql
 ```
-2. Insert hardware specs into psql
-    We can now collect hardware information from a server and store it into `host_info` table inside `host_agent` database.
+2. Insert hardware specs into psql 
+* We can now collect hardware information from a server and store it into `host_info` table inside `host_agent` database.
+    * `psql_host`: host name of the machine which your server is running.
+    * `psql_port`: port server is listening, default is 5432
+    * `db_name`: host_agent
+    * `psql_user`: user username
+    * `psql_password`: user password
 ```
 ./scripts/host_info.sh psql_host psql_port db_name psql_user psql_password
 ```
@@ -70,13 +72,36 @@ and store data into a database.
 ## Scripts
 * `psql_docker.sh` is for setting up a psql instance using docker. This script allows the user to create, start, or stop
   a psql instance.
+```
+# Create a psql instance
+./script/psql_docker.sh create [db_username] [db_password]
+
+# Start the psql container
+./script/psql_docker.sh start
+
+# Stop the psql container
+./script/psql_docker.sh stop
+```
 * `ddl.sql` is for initialization of database and tables. The script used to create `host_agent` database in postgres
   sql. Then `host_info`  and `host_usage` will be created in `host_agent` database.
+```
+# Create host_info table and host usage table
+psql -h localhost -U postgres -d host_agent -f ./sql/ddl.sql
+```  
 * `host_info.sh` is a bash script that will be installed on each server to parse hardware specification data.
+```
+./script/host_info.sh psql_host psql_port db_name psql_user psql_user psql_password
+```
 * `host_usage.sh` is a bash script that will be installed on each server to parse resource usage data.
+```
+./script/host_usage.sh psql_host psql_port db_name psql_user psql_user psql_password
+```
 * `queries.sql` contains three queries. First query groups the hosts by CPU numbers and sort them by total memory size 
 in descending order. Second query returns average used memory over 5 minute interval for every host. Lastly, third query
   detects host failure. These queries would assist the LCA team in analyzing and managing the cluster of servers.
+```
+psql -h localhost -U postgres -d host_agent -f ./sql/queries.sql
+```  
 ## Database Modeling
 * `host_info` table
 
