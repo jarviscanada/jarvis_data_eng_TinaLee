@@ -1,9 +1,9 @@
 # Introduction
-The Cluster monitoring Agent is designed to parse hardware information and resource usage of clustered nodes/servers 
+The Cluster monitoring Agent is designed to track and parse hardware information and resource usage of clustered nodes/servers 
 managed by the Jarvis Cluster Administration (LCA). Each server is running CentOS 7 and the servers communicate 
-internally through IPv4 addresses. Bash scripts are written to automatically parse resource usage data every minute and 
-data parsed will be safely stored in a PostgresSQL database, a database container created by Docker Postgres image. 
-Later, the LCA team will use the data to perform data analysis and future resource planning.
+internally through IPv4 addresses. Bash scripts are built to automatically parse resource usage data every minute and 
+the data parsed will be safely transferred and stored to a PostgresSQL database, which is a database instance created 
+by Docker Postgres image. Later, the LCA team will use the data to perform data analysis and future resource planning.
 
 # Quick Start
 This guide walks you through the cluster monitoring solution. \
@@ -28,7 +28,7 @@ CREATE DATABASE db_name;
 psql -h psql_host -U psql_user -d host_agent -f sql/ddl.sql
 ```
 2. Insert hardware specs into psql
-    We can now collect hardware information from server and store it into `host_info` table inside `host_agent` database.
+    We can now collect hardware information from a server and store it into `host_info` table inside `host_agent` database.
 ```
 ./scripts/host_info.sh psql_host psql_port db_name psql_user psql_password
 ```
@@ -46,10 +46,10 @@ crontab -e
 # add this to crontab
 * * * * * bash path/host_usage.sh  psql_host psql_port db_name psql_user psql_password > /tmp/host_usage.log
 
-#list crontab jobs
+# list crontab jobs
 crontab -l
 
-# you could verify that crontab is running 
+# you can verify that crontab is running 
 cat /tmp/host_usage.log
 ```
 
@@ -61,9 +61,9 @@ cat /tmp/host_usage.log
 1. Used `crontab` command to parse resource usage and send data to database every one minute .
 1. Created a `queries.sql` to query data from database for usage information and failure detection.
 ## Architecture
-This diagram shows how clustered servers communicate with each other through a switch and the flow of how data is 
-stored into a PostgresSQL database. Each server will have its copy of bash shell scripts that automatically parse 
-resource usage and store data into a database.
+This diagram shows communication between clustered servers through a switch and the process of data storage into a 
+PostgresSQL database. Each server will have its copy of bash shell scripts that automatically parse resource usage 
+and store data into a database.
 
 ![Linux_sql_architecture](./assets/Linux_SQL_Architecture.png)
 
@@ -106,12 +106,12 @@ disk_available | INT | Available disk of root directory in MB
 
 # Test
 * For bash scripts, they're tested manually by executing them in terminal and all the testing results are as expected.
-* `ddl.sql` script is manually tested by executing it in the terminal and checking if table were successfully created.
-* `queries.ddl` is tested by inserting sample data into the tables and calling each query independently in the console.
+* `ddl.sql` script is manually tested by executing it in the terminal and checking if database and tables were 
+  successfully created.
+* `queries.ddl` is tested by inserting sample data into the tables and calling each query independently in psql REPL.
 
 
 # Improvements
 * Send out alert when certain resource is overused
 * Generate resource usage report every hour 
-* 
-
+* Monitor internal connections between the servers
