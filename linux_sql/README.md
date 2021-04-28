@@ -1,4 +1,5 @@
 # Introduction
+
 The Cluster monitoring Agent is designed to track and parse hardware information and resource usage of clustered nodes/servers 
 managed by the Jarvis Cluster Administration (LCA). Each server is running CentOS 7 and the servers communicate 
 internally through IPv4 addresses. Bash scripts are built to automatically parse resource usage data every minute and 
@@ -6,6 +7,7 @@ the data parsed will be safely transferred and stored to a PostgresSQL database,
 by Docker Postgres image. Later, the LCA team will use the data to perform data analysis and future resource planning.
 
 # Quick Start
+
 This guide walks you through the cluster monitoring solution. \
 (Note: Docker and psql CLI client must be downloaded before executing the following code) 
 1. Create database and tables
@@ -56,13 +58,16 @@ cat /tmp/host_usage.log
 ```
 
 # Implementation
+
 1. Created a bash script `psql_docker.sh` to provision a PSQL instance using docker.
 1. Then `ddl.sql` is created to initialize database `host_agent` and tables `host_info` and `host_usage`
 1. After the database is successfully created, `host_info.sh` and `host_usage` are implemented to insert hardware 
    specification data and usage information of the server.
 1. Used `crontab` command to parse resource usage and send data to database every one minute .
 1. Created a `queries.sql` to query data from database for usage information and failure detection.
+
 ## Architecture
+
 This diagram shows communication between clustered servers through a switch and the process of data storage into a 
 PostgresSQL database. Each server will have its copy of bash shell scripts that automatically parse resource usage 
 and store data into a database.
@@ -70,6 +75,7 @@ and store data into a database.
 ![Linux_sql_architecture](./assets/Linux_SQL_Architecture.png)
 
 ## Scripts
+
 * `psql_docker.sh` is for setting up a psql instance using docker. This script allows the user to create, start, or stop
   a psql instance.
 ```
@@ -103,6 +109,7 @@ in descending order. Second query returns average used memory over 5 minute inte
 psql -h localhost -U postgres -d host_agent -f ./sql/queries.sql
 ```  
 ## Database Modeling
+
 * `host_info` table
 
 Column Name | Data Type | Description
@@ -130,13 +137,14 @@ disk_io | INT | Number of Input/Output of the server
 disk_available | INT | Available disk of root directory in MB 
 
 # Test
+
 * For bash scripts, they're tested manually by executing them in terminal and all the testing results are as expected.
 * `ddl.sql` script is manually tested by executing it in the terminal and checking if database and tables were 
   successfully created.
 * `queries.ddl` is tested by inserting sample data into the tables and calling each query independently in psql REPL.
 
-
 # Improvements
+
 * Send out alert when certain resource is overused
 * Generate resource usage report every hour 
 * Monitor internal connections between the servers
