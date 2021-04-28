@@ -1,14 +1,14 @@
 # Introduction
-The Cluster monitoring Agent is designed to parse hardware information and resource usage of each node/server 
-managed by the Jarvis Cluster Administration (LCA). Each server runs CentOS 7 and they communicate internally 
-through IPv4 addresses. Bash scripts are written to automatically parse resource usage data every minute and 
+The Cluster monitoring Agent is designed to parse hardware information and resource usage of clustered nodes/servers 
+managed by the Jarvis Cluster Administration (LCA). Each server is running CentOS 7 and the servers communicate 
+internally through IPv4 addresses. Bash scripts are written to automatically parse resource usage data every minute and 
 data parsed will be safely stored in a PostgresSQL database, a database container created by Docker Postgres image. 
 Later, the LCA team will use the data to perform data analysis and future resource planning.
 
 # Quick Start
-This guide walks you through the monitoring agent solution. \
-(Note: Docker and psql CLI client must be downloaded before executing the following code)
-1) Create database and tables
+This guide walks you through the cluster monitoring solution. \
+(Note: Docker and psql CLI client must be downloaded before executing the following code) 
+1. Create database and tables
 ```
 # Start a psql instance using psql_docker.sh
 ./scripts/psql_docker.sh create [db_username] [db_password]
@@ -27,17 +27,17 @@ CREATE DATABASE db_name;
 # Create tables to store hardware specifications and resource usage
 psql -h psql_host -U psql_user -d host_agent -f sql/ddl.sql
 ```
-2) Insert hardware specs into psql
+2. Insert hardware specs into psql
     We can now collect hardware information from server and store it into `host_info` table inside `host_agent` database.
 ```
 ./scripts/host_info.sh psql_host psql_port db_name psql_user psql_password
 ```
-3) Insert resource usage data into psql
+3. Insert resource usage data into psql
     Stores resource usage data of server and store it into `host_usage` table inside `host_agent`.
 ```
-./scripts/host_usage.sh localhost 5432 host_agent [db_username] [db_password]
+./scripts/host_usage.sh psql_host psql_port db_name psql_user psql_password
 ```
-4) Crontab setup
+4. Crontab setup
     Set up crontab to parse resource usage evey 1 minute.
 ```
 # edit crontab tasks 
@@ -68,11 +68,15 @@ resource usage and store data into a database.
 ![Linux_sql_architecture](./assets/Linux_SQL_Architecture.png)
 
 ## Scripts
-* `psql_docker.sh`
-* `ddl.sql`
-* `host_info.sh`
-* `host_usage.sh`
-* `queries.sql`
+* `psql_docker.sh` is for setting up a psql instance using docker. This script allows the user to create, start, or stop
+  a psql instance.
+* `ddl.sql` is for initialization of database and tables. The script used to create `host_agent` database in postgres
+  sql. Then `host_info`  and `host_usage` will be created in `host_agent` database.
+* `host_info.sh` is a bash script that will be installed on each server to parse hardware specification data.
+* `host_usage.sh` is a bash script that will be installed on each server to parse resource usage data.
+* `queries.sql` contains three queries. First query groups the hosts by CPU numbers and sort them by total memory size 
+in descending order. Second query returns average used memory over 5 minute interval for every host. Lastly, third query
+  detects host failure. These queries would assist the LCA team in analyzing and managing the cluster of servers.
 ## Database Modeling
 * `host_info` table
 
