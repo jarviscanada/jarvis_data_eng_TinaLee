@@ -10,7 +10,7 @@ by Docker Postgres image. Later, the LCA team will use the data to perform data 
 
 This guide walks you through the cluster monitoring solution. \
 (Note: Docker and psql CLI client must be downloaded before executing the following code) 
-1. Create database and tables
+
 ```
 # Start a psql instance using psql_docker.sh
 ./scripts/psql_docker.sh create [db_username] [db_password]
@@ -25,25 +25,13 @@ CREATE DATABASE host_agent;
 # You should now be exited from psql REPL
 # Create tables to store hardware specification data and resource usage data
 psql -h localhost -U postgres -d host_agent -f sql/ddl.sql
-```
-2. Insert hardware specs into psql 
-* We can now collect hardware information from a server and store it into `host_info` table inside `host_agent` database.
-    * `psql_host`: host name of the machine which your server is running.
-    * `psql_port`: port server is listening, default is 5432
-    * `db_name`: host_agent
-    * `psql_user`: user username
-    * `psql_password`: user password
-```
+
+# Insert hardware specs into psql 
 ./scripts/host_info.sh psql_host psql_port db_name psql_user psql_password
-```
-3. Insert resource usage data into psql
-    Stores resource usage data of server and store it into `host_usage` table inside `host_agent`.
-```
+
+# Insert resource usage data into psql
 ./scripts/host_usage.sh psql_host psql_port db_name psql_user psql_password
-```
-4. Crontab setup
-    Set up crontab to parse resource usage evey 1 minute.
-```
+
 # edit crontab tasks 
 crontab -e
 
