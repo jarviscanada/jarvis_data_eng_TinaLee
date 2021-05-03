@@ -34,3 +34,4 @@ inst_statement="INSERT INTO host_usage (timestamp, host_id, memory_free, cpu_idl
 export PGPASSWORD=$psql_password
 psql -h $psql_host -U $psql_user -d $db_name -p $psql_port -c "$inst_statement"
 
+exit $?

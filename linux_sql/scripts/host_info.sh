@@ -37,5 +37,5 @@ statement="INSERT INTO host_info (hostname, cpu_number, cpu_architecture, cpu_mo
 export PGPASSWORD="$(psql_password)"
 psql -h $psql_host -p $psql_port -U $psql_user -d $db_name -c "$statement"
 
-exit 0;
+exit $?
 
