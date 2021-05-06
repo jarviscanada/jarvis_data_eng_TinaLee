@@ -24,7 +24,5 @@ public class RegexExcImp implements RegexExc{
     String ip = "1.2.3.4";
     test.matchIp(ip);
     test.matchJpeg("tina.jpeg");
-
-
   }
 }
