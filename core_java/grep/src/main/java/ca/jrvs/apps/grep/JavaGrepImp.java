@@ -70,7 +70,7 @@ public class JavaGrepImp implements JavaGrep {
       }
       reader.close();
     } catch (IOException e) {
-      logger.error(e.getMessage(), e);
+      logger.error("Invalid input", e);
     }
     return lines;
   }
@@ -139,7 +139,7 @@ public class JavaGrepImp implements JavaGrep {
     try {
       javaGrepImp.process();
     } catch (Exception ex) {
-      javaGrepImp.logger.error(ex.getMessage(), ex);
+      javaGrepImp.logger.error("Invalid input", ex);
     }
   }
 }
