@@ -1,6 +1,5 @@
 package ca.jrvs.apps.grep;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,10 +7,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.apache.log4j.BasicConfigurator;
 
-public class JavaGrepLambdaImp extends JavaGrepImp{
+public class JavaGrepLambdaImp extends JavaGrepImp {
 
   public JavaGrepLambdaImp() {
     super();
