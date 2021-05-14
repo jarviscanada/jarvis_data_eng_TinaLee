@@ -1,10 +1,14 @@
 package ca.jrvs.apps.jdbc;
 
 import ca.jrvs.apps.jdbc.util.DataAccessObject;
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import java.sql.*;
 import java.util.List;
 
 public class CustomerDAO extends DataAccessObject<Customer> {
+  final Logger logger = LoggerFactory.getLogger(DataAccessObject.class);
+
   private static final String INSERT = "INSERT INTO customer (first_name, last_name, "
       + "email, phone, address, city, state, zipcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -37,7 +41,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
         customer.setZipCode(rs.getString("zipcode"));
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error("Cannot find Customer by ID", e);
       throw new RuntimeException(e);
     }
     return customer;
@@ -64,7 +68,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
       statement.execute();
       customer = this.findById(dto.getId());
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error("Cannot update Customer", e);
       throw new RuntimeException(e);
     }
     return customer;
@@ -85,7 +89,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
       int id = this.getLastVal(CUSTOMER_SEQUENCE);
       return this.findById(id);
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error("Cannot create Customer", e);
       throw new RuntimeException(e);
     }
   }
@@ -96,7 +100,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
       statement.setLong(1, id);
         statement.execute();
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error("Cannot delete Customer", e);
       throw new RuntimeException(e);
     }
   }

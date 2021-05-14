@@ -16,7 +16,7 @@ public class JDBCExecutor {
       Order order = orderDAO.findById(1000);
       System.out.println(order);
     } catch (SQLException e) {
-      e.printStackTrace();
+      dcm.logger.error("Unable to establish a connection", e);
     }
   }
 }

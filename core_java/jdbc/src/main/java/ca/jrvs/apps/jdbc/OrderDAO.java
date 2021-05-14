@@ -1,11 +1,15 @@
 package ca.jrvs.apps.jdbc;
 
 import ca.jrvs.apps.jdbc.util.DataAccessObject;
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO extends DataAccessObject<Order> {
+  final Logger logger = LoggerFactory.getLogger(DataAccessObject.class);
+
   private static final String GET_ONE = "SELECT\n"
       + "  c.first_name, c.last_name, c.email, o.order_id,\n"
       + "  o.creation_date, o.total_due, o.status,\n"
@@ -18,6 +22,7 @@ public class OrderDAO extends DataAccessObject<Order> {
       + "  join order_item ol on ol.order_id=o.order_id\n"
       + "  join product p on ol.product_id = p.product_id\n"
       + "where o.order_id = ?;";
+
   public OrderDAO(Connection connection) {
     super(connection);
   }
@@ -55,7 +60,7 @@ public class OrderDAO extends DataAccessObject<Order> {
       }
       order.setOrderItems(orderLines);
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error("Error finding Order by Customer ID",e);
       throw new RuntimeException(e);
     }
     return order;
