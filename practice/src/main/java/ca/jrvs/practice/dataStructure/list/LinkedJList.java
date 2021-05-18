@@ -1,7 +1,7 @@
 package ca.jrvs.practice.dataStructure.list;
 
 import java.util.Collection;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
 
 
 public class LinkedJList<E> implements JList<E>{
