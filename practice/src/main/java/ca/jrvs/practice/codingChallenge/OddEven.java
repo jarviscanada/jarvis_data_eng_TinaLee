@@ -1,5 +1,8 @@
 package ca.jrvs.practice.codingChallenge;
 
+/**
+ * ticket: https://www.notion.so/jarvisdev/Sample-Check-if-a-number-is-even-or-odd-3e5999e3c5824e2c86f63fde5eae1824
+ */
 public class OddEven {
 
   /**
@@ -11,7 +14,7 @@ public class OddEven {
   }
 
   /**
-   * Big-O: 1
+   * Big-O: O(1)
    * Justification: bitwise operation
    */
   public String oddEvenBit(int i) {
