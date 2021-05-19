@@ -1,8 +1,6 @@
 package ca.jrvs.practice.dataStructure.tree;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -12,8 +10,10 @@ import java.util.Objects;
  *
  * @param <E> type of object to be stored
  */
-public class JBSTree<E> implements JTree<E>{
+public class JBSTree<E> implements JTree<E> {
+
   static final class Node<E> {
+
     E value;
     Node<E> left;
     Node<E> right;
@@ -27,8 +27,7 @@ public class JBSTree<E> implements JTree<E>{
     public E insert(Comparator<E> comparator, E value) {
       if (comparator.compare(value, this.value) == 0) {
         throw new IllegalArgumentException("Object already exists");
-      }
-      else if (comparator.compare(value, this.value) > 0) {
+      } else if (comparator.compare(value, this.value) > 0) {
         if (this.right == null) {
           this.right = new Node<>(value, this);
           return value;
@@ -50,7 +49,7 @@ public class JBSTree<E> implements JTree<E>{
         return value;
       } else if (comparator.compare(value, this.value) > 0 && left != null) {
         return this.right.search(comparator, value);
-      } else if (right != null){
+      } else if (right != null) {
         return this.left.search(comparator, value);
       } else {
         return null;
@@ -120,10 +119,10 @@ public class JBSTree<E> implements JTree<E>{
       return Objects.hash(value, left, right, parent);
     }
   }
+
   private Node<E> root;
   /**
-   * The comparator used to maintain order in this tree map
-   * Comparator cannot be null
+   * The comparator used to maintain order in this tree map Comparator cannot be null
    */
   private Comparator<E> comparator;
 
@@ -215,11 +214,11 @@ public class JBSTree<E> implements JTree<E>{
         }
       }
       return object;
-    //case 2: Node with one child
+      //case 2: Node with one child
     } else if (curr.getLeft() == null) {
       if (curr == root) {
         root = root.getRight();
-      } else if (flag == 0){
+      } else if (flag == 0) {
         curr.getParent().setLeft(curr.getRight());
       } else {
         curr.getParent().setRight(curr.getRight());
@@ -228,13 +227,13 @@ public class JBSTree<E> implements JTree<E>{
     } else if (curr.getRight() == null) {
       if (curr == root) {
         root = root.getLeft();
-      } else if (flag == 0){
+      } else if (flag == 0) {
         curr.getParent().setLeft(curr.getLeft());
       } else {
         curr.getParent().setRight(curr.getLeft());
       }
       return curr.getValue();
-    //case3: Node with two children
+      //case3: Node with two children
     } else if (curr.getLeft() != null && curr.getRight() != null) {
       Node<E> successor = getSuccessor(curr);
       if (curr == root) {
@@ -263,6 +262,7 @@ public class JBSTree<E> implements JTree<E>{
     }
     return successor;
   }
+
   /**
    * traverse the tree recursively
    *
@@ -283,6 +283,7 @@ public class JBSTree<E> implements JTree<E>{
     result.addAll(preorderTraverse(root.getRight()));
     return result;
   }
+
   /**
    * traverse the tree recursively
    *
@@ -303,6 +304,7 @@ public class JBSTree<E> implements JTree<E>{
     result.addAll(inorderTraverse(root.getRight()));
     return result;
   }
+
   /**
    * traverse the tree recursively
    *
@@ -323,6 +325,7 @@ public class JBSTree<E> implements JTree<E>{
     result.add((E) root.value);
     return result;
   }
+
   /**
    * traverse through the tree and find out the tree height
    *
@@ -332,7 +335,7 @@ public class JBSTree<E> implements JTree<E>{
   @Override
   public int findHeight() {
     if (root == null) {
-      return 0;
+      throw new NullPointerException("Tree is empty");
     } else {
       return root.findHeight();
     }
