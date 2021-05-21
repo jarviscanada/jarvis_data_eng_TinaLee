@@ -15,7 +15,7 @@ public class TwitterHttpHelperTest {
         System.getenv("consumerSecret"), System.getenv("accessToken"),
         System.getenv("tokenSecret"));
 
-    String resource = "https://api.twitter.com/1.1/statuses/update.json?status=cloudy_day";
+    String resource = "https://api.twitter.com/1.1/statuses/update.json?status=happy_day";
     URI uri = new URI(resource);
     HttpResponse postResponse = helper.httpPost(uri);
     System.out.println(EntityUtils.toString(postResponse.getEntity()));
