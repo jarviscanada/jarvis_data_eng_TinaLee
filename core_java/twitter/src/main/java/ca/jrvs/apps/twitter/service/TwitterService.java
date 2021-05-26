@@ -46,11 +46,14 @@ public class TwitterService implements Service{
 
     String[] topLevelFields = new String[]{"create_at", "id", "id_str", "text", "entities", "coordinates",
       "retweet_count", "favorite_count", "favorited", "retweeted"};
-    for (String field : fields) {
-      if (Arrays.binarySearch(topLevelFields, field) == -1) {
-        throw new IllegalArgumentException("Invalid field(s)");
+    if (fields != null) {
+      for (String field : fields) {
+        if (Arrays.binarySearch(topLevelFields, field) == -1) {
+          throw new IllegalArgumentException("Invalid field(s)");
+        }
       }
     }
+
 
     return (Tweet) dao.findById(id);
   }
