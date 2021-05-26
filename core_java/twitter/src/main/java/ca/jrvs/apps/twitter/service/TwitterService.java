@@ -40,7 +40,7 @@ public class TwitterService implements Service{
    */
   @Override
   public Tweet showTweet(String id, String[] fields) {
-    if (!id.matches("[0-9]+")) {
+    if (!id.matches("[0-9]+") || Long.parseLong(id) > Long.MAX_VALUE) {
       throw new IllegalArgumentException("Invalid Id");
     }
 
@@ -53,7 +53,6 @@ public class TwitterService implements Service{
         }
       }
     }
-
 
     return (Tweet) dao.findById(id);
   }
