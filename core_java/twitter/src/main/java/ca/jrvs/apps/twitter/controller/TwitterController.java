@@ -27,7 +27,7 @@ public class TwitterController implements Controller{
    */
   @Override
   public Tweet postTweet(String[] args) {
-    if (args.length != 3 || args[0] != "post") {
+    if (args.length != 3) {
       throw new IllegalArgumentException(
           "USAGE: TwitterCLIApp post \"tweet_text\" \"latitude:longitude\"");
     }
