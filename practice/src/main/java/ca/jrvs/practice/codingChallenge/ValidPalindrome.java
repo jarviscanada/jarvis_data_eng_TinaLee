@@ -10,7 +10,7 @@ public class ValidPalindrome {
    * Justification: replaceAll at most O(n) iterate through entire String the replace characters.
    */
   public boolean twoPointers(String s) {
-    String onlyLetter = s.replaceAll("[^A-Za-z]","").toLowerCase();
+    String onlyLetter = s.replaceAll("[^A-Za-z0-9]","").toLowerCase();
     int mid = onlyLetter.length()/2;
     int pointer1 = 0;
     int pointer2 = onlyLetter.length() - 1;
@@ -31,7 +31,7 @@ public class ValidPalindrome {
    * recursion helper gets called at most n/2 times.
    */
   public boolean validRecursion(String s) {
-    String onlyLetter = s.replaceAll("[^A-Za-z]","").toLowerCase();
+    String onlyLetter = s.replaceAll("[^A-Za-z0-9]","").toLowerCase();
     return recursionHelper(onlyLetter);
   }
 
