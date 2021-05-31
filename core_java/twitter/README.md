@@ -35,7 +35,7 @@ tinalee262008/twitter post|show|delete [options]
 # Design
 ## UML diagram
 
-![UML](.assets/Twitter_UML.png)
+![Twitter_UML](./assets/Twitter_UML.png)
 
 * `TwitterDao` class is the layer class that establishes a connection with the REST API and handles HTTP requests and responses, using the helper class `TwitterHttpHelper`. Also, it serializes and deserializes JSON and model objects.
 
