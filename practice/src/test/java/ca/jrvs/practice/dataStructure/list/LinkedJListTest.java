@@ -2,6 +2,7 @@ package ca.jrvs.practice.dataStructure.list;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
 import org.junit.Test;
 import sun.awt.image.ImageWatched.Link;
 
@@ -89,5 +90,20 @@ public class LinkedJListTest {
     list.add("three");
     list.clear();
     assertTrue(list.isEmpty());
+  }
+
+  @Test
+  public void removeDuplicate() {
+    JList<Integer> linkedJList = new LinkedJList();
+    linkedJList.add(1);
+    linkedJList.add(2);
+    linkedJList.add(3);
+    linkedJList.add(2);
+    linkedJList.add(5);
+    linkedJList.add(3);
+    linkedJList.add(4);
+    ((LinkedJList<Integer>) linkedJList).removeDuplicate();
+    Integer[] arr = new Integer[] {1, 2, 3, 5, 4};
+    assertArrayEquals(arr, linkedJList.toArray());
   }
 }
