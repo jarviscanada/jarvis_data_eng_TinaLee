@@ -42,24 +42,30 @@ public class TwitterDaoTest {
 
   @Test
   public void findById() throws Exception{
-    Tweet tweet = twitterDao.findById("1395812357150961666");
+    String hashtag = "#test";
+    String text = "four " + hashtag + " " + System.currentTimeMillis();
     Double lat = 1d;
-    Double lon = -1d;
-    assertNotNull(tweet.getCoordinates());
-    assertEquals(lat, tweet.getCoordinates().getCoordinates().get(1));
-    assertEquals(lon, tweet.getCoordinates().getCoordinates().get(0));
-    System.out.println(JsonParser.toJson(tweet, true, false));
+    Double lon = -14.789d;
+    Tweet createdTweet = twitterDao.create(TweetUtil.buildTweet(text, lat, lon));
+    Tweet showTweet = twitterDao.findById(createdTweet.getIdStr());
+    assertNotNull(showTweet.getCoordinates());
+    assertEquals(lat, showTweet.getCoordinates().getCoordinates().get(1));
+    assertEquals(lon, showTweet.getCoordinates().getCoordinates().get(0));
+    System.out.println(JsonParser.toJson(showTweet, true, false));
   }
 
   @Test
   public void deleteById() throws Exception{
-    Tweet tweet = twitterDao.deleteById("1395812357150961666");
+    String hashtag = "#test";
+    String text = "four " + hashtag + " " + System.currentTimeMillis();
     Double lat = 1d;
-    Double lon = -1d;
-    assertNotNull(tweet.getCoordinates());
-    assertEquals(lat, tweet.getCoordinates().getCoordinates().get(1));
-    assertEquals(lon, tweet.getCoordinates().getCoordinates().get(0));
-    System.out.println(JsonParser.toJson(tweet, true, false));
+    Double lon = -14.789d;
+    Tweet createdTweet = twitterDao.create(TweetUtil.buildTweet(text, lat, lon));
+    Tweet deleteTweet = twitterDao.deleteById(createdTweet.getIdStr());
+    assertNotNull(deleteTweet.getCoordinates());
+    assertEquals(lat, deleteTweet.getCoordinates().getCoordinates().get(1));
+    assertEquals(lon, deleteTweet.getCoordinates().getCoordinates().get(0));
+    System.out.println(JsonParser.toJson(deleteTweet, true, false));
   }
 
 }

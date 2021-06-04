@@ -9,7 +9,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class TwitterDao implements CrdDao<Tweet, String> {
 
   //URI constants
@@ -27,6 +32,9 @@ public class TwitterDao implements CrdDao<Tweet, String> {
 
   private HttpHelper httpHelper;
 
+  final Logger logger = LoggerFactory.getLogger(CrdDao.class);
+
+  @Autowired
   public TwitterDao(HttpHelper httpHelper) {
     this.httpHelper = httpHelper;
   }
@@ -120,7 +128,7 @@ public class TwitterDao implements CrdDao<Tweet, String> {
       try {
         EntityUtils.toString(response.getEntity());
       } catch (IOException e) {
-        System.out.println("Response entity is empty");
+        logger.error("Response entity is empty", e);
       }
       throw new RuntimeException("Unexpected status: " + status);
     }
