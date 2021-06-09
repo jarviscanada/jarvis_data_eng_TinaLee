@@ -1,8 +1,9 @@
 package ca.jrvs.practice.dataStructure.list;
 
+import java.util.Arrays;
 import java.util.Collection;
-
-
+import java.util.HashSet;
+import java.util.Set;
 
 public class LinkedJList<E> implements JList<E>{
 
@@ -224,5 +225,38 @@ public class LinkedJList<E> implements JList<E>{
     }
     first = last = null;
     size = 0;
+  }
+
+  /**
+   * Big-O: O(n)
+   */
+  public void removeDuplicate() {
+    Set<E> set = new HashSet<>();
+    Node<E> curr = first;
+    Node<E> prev = null;
+    while (curr != null) {
+      if (set.contains(curr.item)) {
+        prev.next = curr.next;
+        size--;
+      } else {
+        set.add(curr.item);
+        prev = curr;
+      }
+      curr = prev.next;
+    }
+  }
+
+  public static void main(String[] args) {
+    LinkedJList linkedJList = new LinkedJList();
+    linkedJList.add(1);
+    linkedJList.add(2);
+    linkedJList.add(3);
+    linkedJList.add(2);
+    linkedJList.add(5);
+    linkedJList.add(3);
+    linkedJList.add(4);
+    System.out.println(Arrays.toString(linkedJList.toArray()));
+    linkedJList.removeDuplicate();
+    System.out.println(Arrays.toString(linkedJList.toArray()));
   }
 }
