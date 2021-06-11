@@ -33,7 +33,6 @@ public class QuoteDaoIntTest {
     savedQuote.setId("aapl");
     savedQuote.setLastPrice(10.1d);
     quoteDao.save(savedQuote);
-
   }
 
   @Test
