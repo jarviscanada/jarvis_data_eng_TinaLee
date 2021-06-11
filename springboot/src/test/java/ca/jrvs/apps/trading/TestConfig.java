@@ -5,16 +5,9 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
-public class AppConfig {
-
-  private Logger logger = LoggerFactory.getLogger(AppConfig.class);
-
+public class TestConfig {
   @Bean
   public MarketDataConfig marketDataConfig() {
     MarketDataConfig marketDataConfig = new MarketDataConfig();
