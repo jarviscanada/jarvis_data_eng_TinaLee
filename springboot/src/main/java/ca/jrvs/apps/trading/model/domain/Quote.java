@@ -10,7 +10,7 @@ public class Quote implements Entity<String> {
   private Integer askSize;
 
   @Override
-  public String getID() {
+  public String getId() {
     return ticker;
   }
 
