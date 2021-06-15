@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -29,12 +30,17 @@ public class QuoteDao implements CrudRepository<Quote, String> {
   private JdbcTemplate jdbcTemplate;
   private SimpleJdbcInsert simpleJdbcInsert;
 
+  public QuoteDao(DataSource dataSource) {
+    jdbcTemplate = new JdbcTemplate(dataSource);
+    simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName(TABLE_NAME);
+  }
+
   @Override
   public Quote save(Quote quote) {
     if (existsById(quote.getId())) {
       int updateRowNo = updateOne(quote);
       if (updateRowNo != 1) {
-        throw new DataRetrievalFailureException("Unable to update quote");
+        throw new DataRetrievalFailureException("Unable to update quote: " + quote.getId());
       }
     } else {
       addOne(quote);
@@ -58,7 +64,7 @@ public class QuoteDao implements CrudRepository<Quote, String> {
    */
   private int updateOne(Quote quote) {
     String updateSql = "UPDATE quote SET last_price=?, bid_price=?, "
-        + "bid_size=?, ask_price=?, ask_size=?, WHERE ticker=?";
+        + "bid_size=?, ask_price=?, ask_size=? WHERE ticker=?";
     return jdbcTemplate.update(updateSql, makeUpdateValues(quote));
   }
 
@@ -75,25 +81,7 @@ public class QuoteDao implements CrudRepository<Quote, String> {
 
   @Override
   public <S extends  Quote> List<S> saveAll(Iterable<S> quotes) {
-    String updateSql = "UPDATE quote SET last_price=?, bid_price=?, "
-        + "bid_size=?, ask_price=?, ask_size=?, WHERE ticker=?";
-    List<Object[]> batch = new ArrayList<>();
-
-    quotes.forEach(quote -> {
-      if (!existsById(quote.getId())) {
-        logger.debug("Cannot find ticker id: " + quote.getId());
-      }
-      Object[] values = makeUpdateValues(quote);
-      batch.add(values);
-    });
-
-    int[] rows = jdbcTemplate.batchUpdate(updateSql, batch);
-    int totalRow = Arrays.stream(rows).sum();
-    if (totalRow != Iterables.size(quotes)) {
-      throw new IncorrectResultSizeDataAccessException("Number of rows ",
-          Iterables.size(quotes), totalRow);
-    }
-
+    quotes.forEach(quote -> save(quote));
     return (List<S>) quotes;
   }
 
@@ -104,7 +92,7 @@ public class QuoteDao implements CrudRepository<Quote, String> {
    */
   @Override
   public Optional<Quote> findById(String ticker) {
-    String select_sql = "SELECT * FROM " + TABLE_NAME + "WHERE " + ID_COLUMN_NAME + "=?";
+    String select_sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID_COLUMN_NAME + "=?";
     Quote quote = null;
 
     try {
@@ -128,9 +116,10 @@ public class QuoteDao implements CrudRepository<Quote, String> {
   public boolean existsById(String ticker) {
     String selectSql = "SELECT count(*) FROM " + TABLE_NAME + " WHERE " + ID_COLUMN_NAME +
         "=?";
+    boolean flag = false;
     int count = jdbcTemplate.queryForObject(selectSql, Integer.class, ticker);
-
-    return count == 1;
+    if (count == 1) flag = true;
+    return flag;
   }
 
   /**
@@ -178,7 +167,7 @@ public class QuoteDao implements CrudRepository<Quote, String> {
 
   @Override
   public void deleteAll() {
-    String deleteSql = "DELETE * FROM " + TABLE_NAME;
+    String deleteSql = "DELETE FROM " + TABLE_NAME;
     jdbcTemplate.update(deleteSql);
   }
 }

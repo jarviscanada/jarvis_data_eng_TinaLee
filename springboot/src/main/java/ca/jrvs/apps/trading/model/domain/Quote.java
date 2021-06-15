@@ -16,6 +16,14 @@ public class Quote implements Entity<String> {
 
   @Override
   public void setId(String s) {
+    this.ticker = s;
+  }
+
+  public String getTicker() {
+    return ticker;
+  }
+
+  public void setTicker(String ticker) {
     this.ticker = ticker;
   }
 
