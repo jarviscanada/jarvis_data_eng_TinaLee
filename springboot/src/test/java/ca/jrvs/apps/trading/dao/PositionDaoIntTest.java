@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import ca.jrvs.apps.trading.TestConfig;
 import ca.jrvs.apps.trading.model.domain.Account;
+import ca.jrvs.apps.trading.model.domain.Position;
 import ca.jrvs.apps.trading.model.domain.Quote;
 import ca.jrvs.apps.trading.model.domain.SecurityOrder;
 import ca.jrvs.apps.trading.model.domain.Trader;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import org.assertj.core.util.Lists;
@@ -23,8 +23,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {TestConfig.class})
 @Sql({"classpath:schema.sql"})
-public class SecurityOrderDaoIntTest {
+public class PositionDaoIntTest {
 
+  @Autowired
+  private PositionDao positionDao;
   @Autowired
   public SecurityOrderDao securityOrderDao;
   @Autowired
@@ -81,11 +83,10 @@ public class SecurityOrderDaoIntTest {
   }
 
   @Test
-  public void findAllById() {
-    List<SecurityOrder> orders = Lists
-        .newArrayList(securityOrderDao.findAllById(Arrays.asList(savedOrder.getId())));
-    assertEquals(1, orders.size());
-    assertEquals(orders.get(0).getTicker(), "AAPL");
-    assertEquals(savedOrder.getAccountId(), orders.get(0).getAccountId());
+  public void findAllPositions() {
+    List<Position> positions = Lists
+        .newArrayList(positionDao.getPositions(savedAccount.getId()));
+    assertEquals(1, positions.size());
+    assertEquals(positions.get(0).getPosition(), savedOrder.getSize());
   }
 }
