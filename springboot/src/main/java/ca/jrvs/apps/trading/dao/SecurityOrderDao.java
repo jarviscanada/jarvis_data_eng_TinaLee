@@ -1,10 +1,12 @@
 package ca.jrvs.apps.trading.dao;
 
 import ca.jrvs.apps.trading.model.domain.SecurityOrder;
+import java.util.List;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -70,5 +72,12 @@ public class SecurityOrderDao extends JdbcCrudDao<SecurityOrder>{
   @Override
   public void deleteAll(Iterable<? extends SecurityOrder> iterable) {
     throw new UnsupportedOperationException("Not implemented");
+  }
+
+  public List<SecurityOrder> findByAccountId(Integer accountId) {
+    String selectSql = "SELECT * FROM " + getTableName() + " WHERE account_id=?";
+    List<SecurityOrder> securityOrders = getJdbcTemplate().query(selectSql,
+        BeanPropertyRowMapper.newInstance(SecurityOrder.class), accountId);
+    return securityOrders;
   }
 }
