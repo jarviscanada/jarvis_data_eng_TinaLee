@@ -113,7 +113,6 @@ public class MarketDataDao implements CrudRepository<IexQuote, String> {
     for (String ticker : tickers) {
       if (IexQuotesJson.has(ticker)) {
         try {
-          System.out.println(IexQuotesJson.toString());
           IexQuote quote = objectMapper.readValue(IexQuotesJson.getJSONObject(ticker).get("quote").toString(), IexQuote.class);
           quotes.add(quote);
         } catch (IOException e) {
