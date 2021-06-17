@@ -83,11 +83,23 @@ public class AccountDao extends JdbcCrudDao<Account> {
     } catch (IncorrectResultSizeDataAccessException e) {
       logger.debug("Cannot find account associated with trader id: " + traderId);
     }
-
     return account;
   }
 
-  public Account updateAmountById(Integer traderId, Double fund) {
-    return null;
+  public Account updateAmountById(Integer traderId, Double fund, String action) {
+    Account account = findByTraderId(traderId);
+    Double newAmount;
+    if (action.equals("deposit")) {
+      newAmount = account.getAmount() + fund;
+    } else if (action.equals("withdraw")){
+      newAmount = account.getAmount() - fund;
+    } else {
+      throw new IllegalArgumentException("Illegal action: Only deposit or withdraw");
+    }
+
+    String updateSql = "UPDATE " + getTableName() + " SET amount=? WHERE " +
+        getIdColumnName() + "=?";
+    jdbcTemplate.update(updateSql, newAmount, traderId);
+    return findByTraderId(traderId);
   }
 }

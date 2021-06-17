@@ -109,7 +109,19 @@ public class TraderAccountService {
    * and fund is less than or equal to 0
    */
   public Account deposit(Integer traderId, Double fund) {
-    return null;
+    if (traderId == null) {
+      throw new IllegalArgumentException("Trader ID cannot be null");
+    } else if (fund <= 0) {
+      throw new IllegalArgumentException("Fund must be greater than 0");
+    }
+
+    Account account = accountDao.findByTraderId(traderId);
+    if (account == null) {
+      throw new IllegalArgumentException("Unable to find trader ID: " + traderId);
+    }
+
+    Account updatedAccount = accountDao.updateAmountById(traderId, fund, "deposit");
+    return updatedAccount;
   }
 
   /**
@@ -125,6 +137,20 @@ public class TraderAccountService {
    * fund is less than or equal to 0, and insufficient fund
    */
   public Account withdraw(Integer traderId, Double fund) {
-    return null;
+    if (traderId == null) {
+      throw new IllegalArgumentException("Trader ID cannot be null");
+    } else if (fund <= 0) {
+      throw new IllegalArgumentException("Fund must be greater than 0");
+    }
+
+    Account account = accountDao.findByTraderId(traderId);
+    if (account == null) {
+      throw new IllegalArgumentException("Unable to find trader ID: " + traderId);
+    } else if (account.getAmount() < fund) {
+      throw new IllegalArgumentException("Unable to withdraw: insufficient fund");
+    }
+
+    Account updatedAccount = accountDao.updateAmountById(traderId, fund, "withdraw");
+    return updatedAccount;
   }
 }
