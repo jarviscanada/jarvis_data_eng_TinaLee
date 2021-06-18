@@ -13,6 +13,11 @@ public class LinkedListCycle {
     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
   }
 
+  /**
+   * Big-O: O(n)
+   * Justification: p1 move two steps at a time and it will catch up to p2 before p2 start second
+   * iteration. while loop runs at most n times, where n == element in Linkedist.
+   */
   public boolean hasCycle(ListNode head) {
     if (head == null) return false;
 
