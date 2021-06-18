@@ -6,7 +6,7 @@ package ca.jrvs.practice.codingChallenge;
 public class SwapTwoNumbers {
 
   /**
-   * Big-O: O(n) bit-wise operations
+   * Big-O: O(1) bit-wise operations
    */
   public int[] swapTwoNumbersBit(int[] nums) {
     nums[0] = nums[0] ^ nums[1];
@@ -16,7 +16,7 @@ public class SwapTwoNumbers {
   }
 
   /**
-   * Big-O: O(n) Arithmetic operations
+   * Big-O: O(1) Arithmetic operations
    */
   public int[] swapTwoNumbersArithmetic(int[] nums) {
     nums[0] = nums[0] + nums[1];
