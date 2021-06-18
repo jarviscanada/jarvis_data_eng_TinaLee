@@ -1,14 +1,12 @@
 package ca.jrvs.apps.trading.dao;
 
 import ca.jrvs.apps.trading.model.domain.Quote;
-import com.google.common.collect.Iterables;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -30,6 +28,7 @@ public class QuoteDao implements CrudRepository<Quote, String> {
   private JdbcTemplate jdbcTemplate;
   private SimpleJdbcInsert simpleJdbcInsert;
 
+  @Autowired
   public QuoteDao(DataSource dataSource) {
     jdbcTemplate = new JdbcTemplate(dataSource);
     simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName(TABLE_NAME);
@@ -75,7 +74,7 @@ public class QuoteDao implements CrudRepository<Quote, String> {
    */
   private Object[] makeUpdateValues(Quote quote) {
     Object[] values = new Object[]{quote.getLastPrice(), quote.getBidPrice(), quote.getBidSize(),
-      quote.getAskPrice(), quote.getAskSize(), quote.getId()};
+        quote.getAskPrice(), quote.getAskSize(), quote.getId()};
     return values;
   }
 
