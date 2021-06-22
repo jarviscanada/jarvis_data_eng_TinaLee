@@ -75,7 +75,7 @@ Try trading-app with SwaggerUI (http://localhost:8080/swagger-ui.html)
   throw an exception.
 - **DAO layer:** The layer that perform CRUD functionalities. It connects and retrieve data from external data source. In
   our application it fetches stock information from IEX Cloud and persist and retrieve data from PostgreSQL.
-- **SpringBoot:** WebServlet/TomCat in springboot handles the http client requests and packages http reponse back
+- **SpringBoot:** WebServlet/TomCat in springboot handles the http client requests and packages http response back
   to the client. On the other hand, IoC container in springboot manage components (Controller, Service and Dao) and
   dependencies.
 - **PSQL and IEX**: External data source, where we fetch and persist our data. PSQL is used to store trader profile,
@@ -114,7 +114,9 @@ The application is tested using JUnit4 integration tests with coverage more than
 
 # Deployment
 ![springbootDocker](./src/main/resources/springboot_docker.png)
-- describe each image in details (e.g. how psql initialize tables)
+
+To deploy the application, two Dockerfiles are implemented. One Dockerfile is for creating a Postgres image with initialized tables and the other one is for our application. The `docker build` command is called to build two images `trading-app` and `trading-psql` from base images postgres and openjdk:8-alpine. Once the images are built `trading-psql-dev` and `trading-app-dev` containers are created using `docker run`
+command and trading-net docker network is bind to the containers for communications.
 
 # Improvements
 - Add feature that allows users to make market or limit orders.
