@@ -24,15 +24,15 @@ skills:
     - Docker
     - JUnit/Mockito
     - REST API
-    - fermentum
-    - Donec
+    - Spring Boot
+    - MVC architecture
   # At least 5 skills
   familiar:
     - Javascript
     - React Native
     - R
     - Python
-    - fermentum
+    - Express.js
 
 # List of Jarvis projects
 jarvis_projects:
@@ -49,7 +49,7 @@ jarvis_projects:
       - "Grep App: Developed a Java application that mimics the grep command line function. The app recursively searches for a matched pattern given a root directory and outputs matched lines to an output file."
   - name: "Springboot App"
     git_url: "/springboot"
-    description: ""
+    description: "Designed a Java application that simulates an online stock trading platform using microservice and MVC architecture. The application fetches the latest market data from IEX Cloud and stores this information along with trader information in the PostgreSQL database. Users could buy or sell stocks and deposit or withdraw funds from their accounts. This application is managed and packaged by Maven and Spring Boot."
   - name: "Python Data Analytics"
     git_url: "/python_data_anlytics"
     description: ""
@@ -105,9 +105,8 @@ others:
   - title: "Certificates"
     #list of items
     bullets:
-      - "Udacity Machine Learning (2019)"
+      - "Business IT certificate (2021)"
   - title: "Activities/Hobbies"
     bullets:
       - "Badminton player"
       - "Snowboarding"
-      - "Volunteer, ABC Food bank: Ut enim ad minim veniam"

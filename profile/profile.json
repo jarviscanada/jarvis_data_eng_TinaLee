@@ -37,7 +37,7 @@
       "name": "Core Java Apps"
     },
     {
-      "description": "",
+      "description": "Designed a Java application that simulates an online stock trading platform using microservice and MVC architecture. The application fetches the latest market data from IEX Cloud and stores this information along with trader information in the PostgreSQL database. Users could buy or sell stocks and deposit or withdraw funds from their accounts. This application is managed and packaged by Maven and Spring Boot.",
       "git_url": "/springboot",
       "name": "Springboot App"
     },
@@ -66,15 +66,14 @@
   "others": [
     {
       "bullets": [
-        "Udacity Machine Learning (2019)"
+        "Business IT certificate (2021)"
       ],
       "title": "Certificates"
     },
     {
       "bullets": [
         "Badminton player",
-        "Snowboarding",
-        "Volunteer, ABC Food bank: Ut enim ad minim veniam"
+        "Snowboarding"
       ],
       "title": "Activities/Hobbies"
     }
@@ -98,15 +97,15 @@
       "Docker",
       "JUnit/Mockito",
       "REST API",
-      "fermentum",
-      "Donec"
+      "Spring Boot",
+      "MVC architecture"
     ],
     "familiar": [
       "Javascript",
       "React Native",
       "R",
       "Python",
-      "fermentum"
+      "Express.js"
     ],
     "proficient": [
       "Java",

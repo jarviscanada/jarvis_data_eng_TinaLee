@@ -6,9 +6,9 @@ I am a new graduate from the University of Toronto with a Bachelor's degree spec
 
 **Proficient:** Java, Linux/Bash, RDBMS/SQL, Agile/Scrum, Git, SQL, IntelliJ, Maven
 
-**Competent:** Docker, JUnit/Mockito, REST API, fermentum, Donec
+**Competent:** Docker, JUnit/Mockito, REST API, Spring Boot, MVC architecture
 
-**Familiar:** Javascript, React Native, R, Python, fermentum
+**Familiar:** Javascript, React Native, R, Python, Express.js
 
 ## Jarvis Projects
 
@@ -23,7 +23,7 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_TinaLee](h
   - JDBC App: Implemented a simple application that sets up a connection between a Java application and RDBMS for data accessing. The CRUD functionalities are implemented using DAO design patterns.
   - Grep App: Developed a Java application that mimics the grep command line function. The app recursively searches for a matched pattern given a root directory and outputs matched lines to an output file.
 
-**Springboot App** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/springboot)]: Not Started
+**Springboot App** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/springboot)]: Designed a Java application that simulates an online stock trading platform using microservice and MVC architecture. The application fetches the latest market data from IEX Cloud and stores this information along with trader information in the PostgreSQL database. Users could buy or sell stocks and deposit or withdraw funds from their accounts. This application is managed and packaged by Maven and Spring Boot.
 
 **Python Data Analytics** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/python_data_anlytics)]: Not Started
 
@@ -52,7 +52,6 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_TinaLee](h
 
 
 ## Miscellaneous
-- Udacity Machine Learning (2019)
+- Business IT certificate (2021)
 - Badminton player
 - Snowboarding
-- Volunteer, ABC Food bank: Ut enim ad minim veniam
