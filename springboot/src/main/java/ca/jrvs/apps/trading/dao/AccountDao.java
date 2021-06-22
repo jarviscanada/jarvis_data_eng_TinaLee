@@ -18,6 +18,8 @@ public class AccountDao extends JdbcCrudDao<Account> {
 
   private final String TABLE_NAME = "account";
   private final String ID_COLUMN = "id";
+  private static final String DEPOSIT_ACTION = "deposit";
+  private static final String WITHDRAW_ACTION = "withdraw";
 
   private JdbcTemplate jdbcTemplate;
   private SimpleJdbcInsert simpleInsert;
@@ -89,9 +91,9 @@ public class AccountDao extends JdbcCrudDao<Account> {
   public Account updateAmountById(Integer traderId, Double fund, String action) {
     Account account = findByTraderId(traderId);
     Double newAmount;
-    if (action.equals("deposit")) {
+    if (action.equals(DEPOSIT_ACTION)) {
       newAmount = account.getAmount() + fund;
-    } else if (action.equals("withdraw")){
+    } else if (action.equals(WITHDRAW_ACTION)){
       newAmount = account.getAmount() - fund;
     } else {
       throw new IllegalArgumentException("Illegal action: Only deposit or withdraw");
