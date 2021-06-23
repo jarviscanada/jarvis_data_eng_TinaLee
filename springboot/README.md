@@ -64,6 +64,7 @@ docker run --name trading-app-dev \
 
 Try trading-app with SwaggerUI (http://localhost:8080/swagger-ui.html)
 
+![springboot_swgger](./src/main/resources/Springboot_Swagger.png)
 
 # Implemenation
 ## Architecture
