@@ -30,9 +30,4 @@ public class CountPrimes {
     }
     return true;
   }
-
-  public static void main(String[] args) {
-    CountPrimes countPrimes = new CountPrimes();
-    System.out.println(countPrimes.countPrimes(50));
-  }
 }
