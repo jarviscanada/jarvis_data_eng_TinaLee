@@ -19,11 +19,11 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_TinaLee](h
 
 **Core Java Apps** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/core_java)]:
       
-  - Twitter App: Designed a Twitter application with MVC architecture that allows users to perform CRUD functionalities via REST API. Programmed using Twitter API, HTTP client, OAuth authorization, and JSON serialization libraries.
+  - Twitter App: Designed a Twitter application with MVC architecture that allows users to perform CRUD functionalities via REST API. Programmed using Twitter API, HTTP client, OAuth authorization, and JSON serialization libraries. During development, JUnit is used to perform integration tests on all java files, and Mockito framework is used to test classes with dependency utilizing the ability to mock the dependency.
   - JDBC App: Implemented a simple application that sets up a connection between a Java application and RDBMS for data accessing. The CRUD functionalities are implemented using DAO design patterns.
-  - Grep App: Developed a Java application that mimics the grep command line function. The app recursively searches for a matched pattern given a root directory and outputs matched lines to an output file.
+  - Grep App: Developed a Java application that mimics the grep command line function. The app recursively searches for a matched pattern given a root directory and outputs matched lines to an output file. Used Lambda and Stream API to list and filter files under the root directory and reduce memory usage.
 
-**Springboot App** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/springboot)]: Designed a Java application that simulates an online stock trading platform using microservice and MVC architecture. The application fetches the latest market data from IEX Cloud and stores this information along with trader information in the PostgreSQL database. Users could buy or sell stocks and deposit or withdraw funds from their accounts. This application is managed and packaged by Maven and Spring Boot.
+**Springboot App** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/springboot)]: Designed and developed a REST API that allows users to buy or sell securities, manage their profile, and deposit and withdraws funds from their accounts. The application fetches the latest market data from IEX Cloud and stores this information along with trader information in the PostgreSQL database using Java 8, Springboot, microservice, MVC architecture.  For testing, integration tests are implemented using JUnit 4 with coverage of more than 60 percent. Later, the application is dockerized using base images postgres and alpine.
 
 **Python Data Analytics** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/python_data_anlytics)]: Not Started
 
