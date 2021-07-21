@@ -25,7 +25,7 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_TinaLee](h
 
 **Springboot App** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/springboot)]: Designed and developed a REST API that allows users to buy or sell securities, manage their profile, and deposit and withdraws funds from their accounts. The application fetches the latest market data from IEX Cloud and stores this information along with trader information in the PostgreSQL database using Java 8, Springboot, microservice, MVC architecture.  For testing, integration tests are implemented using JUnit 4 with coverage of more than 60 percent. Later, the application is dockerized using base images postgres and alpine.
 
-**Python Data Analytics** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/python_data_anlytics)]: Not Started
+**Python Data Analytics** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/python_data_anlytics)]: Performed data analytics against London Gift Shop (LGS) historical data stored in a PostgreSQL database to help LGS marketing team to come up with new marketing strategies to increase its revenue. Analytics is done in Jupyter Notebook using several Python libraries such as Pandas, NumPy, Matplotlib, etc.
 
 **Hadoop** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_TinaLee/tree/master/hadoop)]: Not Started
 
